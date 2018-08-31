@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+        <!-- <contextName>AppName</contextName> -->
+
+  <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+     <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+      <fileNamePattern>${HFP_SERVER_LOG}/${MAIN_SERVER_OBJECT}_%d{yyyy-MM-dd}.log</fileNamePattern>
+      <maxHistory>30</maxHistory>
+    </rollingPolicy>
+
+    <append>true</append>
+
+
+
+  <!--
+    选择使用：过滤掉所有日志消息中不包含“billing”字符串的日志
+    <filter class="ch.qos.logback.core.filter.EvaluatorFilter">
+      <evaluator>
+        <expression>return message.contains("billing");</expression>
+      </evaluator>
+      <OnMatch>ACCEPT </OnMatch>
+      <OnMismatch>DENY</OnMismatch>
+    </filter>
+        -->
+
+     <layout class="ch.qos.logback.classic.PatternLayout">
+        <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+     </layout>
+
+  </appender>
+
+  <!--
+        选择使用：日志的输出精细控制：additivity=false 日志不向上级传递
+          <logger name="com"/>
+          <logger name="com.afis.hfp.gateway" level="INFO" additivity="false">
+            <appender-ref ref="FILE"/>
+          </logger>
+        -->
+
+  <root level="DEBUG">
+    <appender-ref ref="FILE" />
+  </root>
+
+
+</configuration>
