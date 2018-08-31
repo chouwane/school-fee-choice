@@ -20,7 +20,7 @@ public class WebConfig implements WebMvcConfigurer {
         interceptor.setApplicationContext(applicationContext);
         registry.addInterceptor(interceptor)
                 .addPathPatterns("/**")
-                .excludePathPatterns("/login.html","/login","/js/**", "/style/**")
+                .excludePathPatterns("/js/**", "/style/**")
         ;
 
     }

@@ -5,6 +5,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.util.WebUtils;
 import pers.wh.school.fee.choice.entity.Student;
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -24,12 +25,23 @@ public class AuthorizeInterceptor implements HandlerInterceptor {
         HttpSession session = request.getSession();
         Student user = (Student) session.getAttribute("student");
         if(user == null){
+            if(request.getServletPath().indexOf("login") != -1){
+                //登陆界面无需权限即可访问
+                return true;
+            }
+
             if(isAjaxRequest(request)){
                 response.sendError(403, "尚未登录");
             }else{
                 response.sendRedirect("/login");
             }
             return false;
+        }else{
+            if(request.getServletPath().indexOf("login") != -1){
+                //已经登陆过的再次访问登陆界面，则直接转到主页
+                response.sendRedirect("/");
+                return true;
+            }
         }
         return true;
     }
