@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>登陆</title>
+    <link rel="stylesheet" href="./style/pure-min.css">
+</head>
+<body style="text-align:center">
+
+<div id="login" class="container">
+    <div class="title"><h3>无锡市立人小学缴费项目</h3></div>
+
+</div>
+<form id="loginForm" class="pure-form" >
+    <fieldset>
+        <table style="margin: 0 auto">
+            <tr>
+                <td align="right">身份证号码：</td>
+                <td align="left"><input id="certNo" name="certNo" type="text"></td>
+            </tr>
+        </table>
+        <br/>
+        <div class="pure-control-group">
+            <button id="submitBtn" type="submit" class="pure-button pure-button-primary">登陆</button>
+        </div>
+    </fieldset>
+</form>
+
+<script src="./js/jquery-1.11.1.min.js"></script>
+<script>
+
+    $('#loginForm').submit(function() {
+        $('#submitBtn').attr("disabled",true);
+        $.post("/login", $(this).serialize(), function (data) {
+            if(data.code == 0){
+                window.location.href = "/"
+            }else{
+                alert(data.desc)
+            }
+            $('#submitBtn').attr("disabled",false);
+        });
+        return false;
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>首页</title>
+    <link rel="stylesheet" href="./style/pure-min.css">
+</head>
+<body style="text-align:center">
+
+<div id="app" >
+
+    <div class="title"><h3>无锡市立人小学缴费项目</h3></div>
+    <br/>
+    <table style="margin: 0 auto">
+        <tr>
+            <td align="right">班级：</td>
+            <td align="left">{{student.classRoom}}</td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td align="right">姓名：</td>
+            <td align="left">{{student.name}}</td>
+        </tr>
+        <tr>
+            <td>&nbsp;&nbsp;</td>
+            <td>&nbsp;&nbsp;</td>
+            <td>&nbsp;&nbsp;</td>
+            <td>&nbsp;&nbsp;</td>
+        </tr>
+        <tr>
+            <td align="right">家长：</td>
+            <td align="left">{{student.parent}}</td>
+            <td>&nbsp;&nbsp;&nbsp;&nbsp;</td>
+            <td align="right">联系方式：</td>
+            <td align="left">{{student.contact}}</td>
+        </tr>
+    </table>
+    <br/>
+    <div class="feeItem" >
+        <table class="pure-table" style="margin: 0 auto">
+            <thead>
+                <tr>
+                    <th>缴费项目</th>
+                    <th>缴费项目</th>
+                    <th colspan="2">选择</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="feeItem in student.feeItems">
+                    <td>{{feeItem.name}}</td>
+                    <td>{{feeItem.amount}}</td>
+                    <td><input type="checkbox" v-model="feeItem.checked" :disabled="feeItem.required"></td>
+                    <td>{{feeItem.checked ? '已选择': '未选择'}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <br/>
+        <div>
+            <button id="saveBtn" @click="save" class="pure-button pure-button-primary">保存</button>
+        </div>
+    </div>
+
+</div>
+
+<script src="./js/vue.min.js"></script>
+<script src="./js/jquery-1.11.1.min.js"></script>
+<script>
+    var app = new Vue({
+        el: '#app',
+        data: {
+            student: {}
+        },
+        methods: {
+            loadData:function () {
+                $.post('/studentFeeItems', {certNo:'34240120100201345X'}, function (data) {
+                    app.student = data.data
+                })
+            },
+            save:function () {
+                $('#saveBtn').attr("disabled",true);
+                console.log("----app.student------", JSON.stringify(app.student))
+                /*$.post('/save', JSON.stringify(app.student), function (data) {
+                    if(data.code == 0){
+                        alert("保存成功")
+                    }else{
+                        alert("保存失败，请重新选择")
+                    }
+                })*/
+
+                $.ajax({
+                    type: "post",
+                    dataType: 'json',
+                    url: '/save',
+                    contentType: "application/json; charset=utf-8",
+                    data: JSON.stringify(app.student),
+                    success: function (data) {
+                        if(data.code == 0){
+                            alert("保存成功")
+                        }else{
+                            alert("保存失败，请重新选择")
+                        }
+                        $('#saveBtn').attr("disabled",false);
+                    }
+                });
+            }
+        },
+        mounted: function () {
+            this.loadData()
+        }
+    })
+</script>
+
+</body>
+</html>
