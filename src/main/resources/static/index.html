@@ -61,6 +61,8 @@
 
 </div>
 
+<script src="./js/sweetalert.min.js"></script>
+<script src="./js/utils.js"></script>
 <script src="./js/vue.min.js"></script>
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script>
@@ -94,9 +96,9 @@
                     data: JSON.stringify(app.student),
                     success: function (data) {
                         if(data.code == 0){
-                            alert("保存成功")
+                            myAlert({code:0, desc:"保存成功"})
                         }else{
-                            alert("保存失败，请重新选择")
+                            myAlert({code:-1, desc: "保存失败，请重新选择"})
                         }
                         $('#saveBtn').attr("disabled",false);
                     }

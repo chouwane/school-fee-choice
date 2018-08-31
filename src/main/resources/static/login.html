@@ -27,16 +27,18 @@
     </fieldset>
 </form>
 
+<script src="./js/sweetalert.min.js"></script>
+<script src="./js/utils.js"></script>
 <script src="./js/jquery-1.11.1.min.js"></script>
 <script>
-
+    //myAlert({code:-1, desc: "登录失败"})
     $('#loginForm').submit(function() {
         $('#submitBtn').attr("disabled",true);
         $.post("/login", $(this).serialize(), function (data) {
             if(data.code == 0){
                 window.location.href = "/"
             }else{
-                alert(data.desc)
+                myAlert(data)
             }
             $('#submitBtn').attr("disabled",false);
         });
