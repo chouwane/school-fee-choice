@@ -47,7 +47,7 @@ public class StudentService {
             StudentDto studentDto = new StudentDto();
             studentDto.copyFrom(student);
 
-            List<FeeItem> feeItems = feeItemQueryAll();
+            List<FeeItem> feeItems = feeItemDao.findByGrade(student.getGrade());
             if(feeItems != null && !feeItems.isEmpty()){
                 for(FeeItem item : feeItems){
                     if(!item.isRequired()){

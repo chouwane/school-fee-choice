@@ -39,13 +39,15 @@
         <table class="pure-table" style="margin: 0 auto">
             <thead>
                 <tr>
+                    <th>年级</th>
                     <th>缴费项目</th>
-                    <th>缴费项目</th>
+                    <th>缴费金额</th>
                     <th colspan="2">选择</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="feeItem in student.feeItems">
+                    <td>{{feeItem.grade}}</td>
                     <td>{{feeItem.name}}</td>
                     <td>{{feeItem.amount}}</td>
                     <td><input type="checkbox" v-model="feeItem.checked" :disabled="feeItem.required"></td>

@@ -36,6 +36,12 @@ public class Student {
     private String name;
 
     /**
+     * 年级
+     */
+    @Column(name = "grade")
+    private String grade;
+
+    /**
      * 班级
      */
     @Column(name="class")

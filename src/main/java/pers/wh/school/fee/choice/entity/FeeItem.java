@@ -25,6 +25,12 @@ public class FeeItem {
     private long id;
 
     /**
+     * 年级
+     */
+    @Column(name = "grade")
+    private String grade;
+
+    /**
      * 项目名称
      */
     @Column(name = "xmmc")
